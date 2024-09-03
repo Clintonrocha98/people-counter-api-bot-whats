@@ -1,11 +1,10 @@
-import { EventLog, PeopleCount } from './model.js';
+import { PeopleCount } from './model.js';
 
 const incrementPeopleCount = async () => {
-  const newEvent = await EventLog.create({ type: 'entry' });
 
   const data = await PeopleCount.findOneAndUpdate(
     {},
-    { $inc: { totalPeople: 1 }, $set: { lastUpdated: Date.now() }, $push: { eventLogs: newEvent._id } },
+    { $inc: { totalPeople: 1 }, $set: { lastUpdated: Date.now() } },
     { upsert: true, new: true }
   );
 
@@ -15,11 +14,10 @@ const incrementPeopleCount = async () => {
 };
 
 const decrementPeopleCount = async () => {
-  const newEvent = await EventLog.create({ type: 'exit' });
 
   const data = await PeopleCount.findOneAndUpdate(
     {},
-    { $inc: { totalPeople: -1 }, $set: { lastUpdated: Date.now() }, $push: { eventLogs: newEvent._id } },
+    { $inc: { totalPeople: -1 }, $set: { lastUpdated: Date.now() } },
     { upsert: true, new: true }
   );
 
@@ -28,7 +26,7 @@ const decrementPeopleCount = async () => {
   return data;
 }
 const getCurrentPeopleCount = async () => {
-  const record = await PeopleCount.findOne({}).populate('eventLogs');
+  const record = await PeopleCount.findOne({});
 
   if (!record) return null;
 
