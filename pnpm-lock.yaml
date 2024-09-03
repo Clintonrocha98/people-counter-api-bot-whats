@@ -20,6 +20,9 @@ importers:
       helmet:
         specifier: ^7.1.0
         version: 7.1.0
+      mongodb:
+        specifier: ^6.8.0
+        version: 6.8.0
       mongoose:
         specifier: ^8.6.0
         version: 8.6.0
