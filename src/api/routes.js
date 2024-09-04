@@ -4,7 +4,7 @@ import controller from "../api/controller.js";
 const router = Router();
 
 router.get("/", controller.getCurrentCount);
-router.patch("/increment", controller.incrementPeopleCount);
-router.patch("/decrement", controller.decrementPeopleCount);
+router.get("/increment", controller.incrementPeopleCount);
+router.get("/decrement", controller.decrementPeopleCount);
 
 export { router };

@@ -12,7 +12,7 @@ const store = new MongoStore({ mongoose: mongoose });
 const client = new Client({
   authStrategy: new RemoteAuth({
     store: store,
-    backupSyncIntervalMs: 300000,
+    backupSyncIntervalMs: 600000,
   }),
 });
 
@@ -22,10 +22,6 @@ client.on('qr', (qr) => {
 
 client.on('ready', () => {
   console.log('Client is ready!');
-});
-
-client.on('authenticated', (session) => {
-  console.log('AUTENTICADO', session);
 });
 
 client.on('auth_failure', msg => {
@@ -41,8 +37,12 @@ client.on('message_create', async (message) => {
       console.log(errMessage, errStatusCode);
       message.reply(`Problema na contagem de pessoas: ${errMessage}, status code: ${errStatusCode}`);
     }
-    const mesg = `Total de pessoas na sala: ${data.totalPeople}`
-    message.reply(mesg);
+    const msg = `🔢 Atualização de Presença 🔢\n\n👥 Número total de pessoas na sala: ${data.totalPeople}\n⏰ Última atualização: ${data.lastUpdated}\n`;
+    message.reply(msg);
+  }
+  if (message.body === "!site") {
+    const msg = "Acesse o site e veja em tempo real a quantidade de pessoas na sala! 📊️\nhttps://clintonrocha98.github.io/people-counter-front/";
+    message.reply(msg);
   }
 });
 
