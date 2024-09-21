@@ -37,7 +37,9 @@ client.on('message_create', async (message) => {
       console.log(errMessage, errStatusCode);
       message.reply(`Problema na contagem de pessoas: ${errMessage}, status code: ${errStatusCode}`);
     }
-    const msg = `🔢 Atualização de Presença 🔢\n\n👥 Número total de pessoas na sala: ${data.totalPeople}\n⏰ Última atualização: ${data.lastUpdated}\n`;
+    const dateUpdate = new Date(data.lastUpdated).toLocaleString();
+
+    const msg = `🔢 Atualização de Presença 🔢\n\n👥 Número total de pessoas na sala: ${data.totalPeople}\n⏰ Última atualização: ${dateUpdate}\n`;
     message.reply(msg);
   }
   if (message.body === "!site") {

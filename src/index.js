@@ -20,20 +20,17 @@ app.use(express.json());
 
 app.use("/api", router);
 
-const start = () =>
-  app
-    .listen(Number(process.env.PORT) || 3000)
-    .on("listening", () =>
-      console.log(
-        `Server running on PORT:${process.env.PORT || 3000}`
-      )
+app
+  .listen(Number(process.env.PORT) || 3000)
+  .on("listening", () =>
+    console.log(
+      `Server running on PORT:${process.env.PORT || 3000}`
     )
-    .on("error", async (err) => {
-      await mongoDisconnect();
-      process.exit(1);
-    });
-
-start();
+  )
+  .on("error", async (err) => {
+    await mongoDisconnect();
+    process.exit(1);
+  });
 
 process.on("SIGINT", async () => {
   console.log("SIGINT signal received: closing MongoDB connection");
