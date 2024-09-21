@@ -9,12 +9,16 @@ const { Client, RemoteAuth } = whatsappWeb;
 
 const store = new MongoStore({ mongoose: mongoose });
 
-const client = new Client({
-  authStrategy: new RemoteAuth({
-    store: store,
-    backupSyncIntervalMs: 600000,
-  }),
-});
+const client = new Client(
+  {
+    puppeteer: {
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    },
+    authStrategy: new RemoteAuth({
+      store: store,
+      backupSyncIntervalMs: 600000,
+    }),
+  });
 
 client.on('qr', (qr) => {
   qrcode.generate(qr, { small: true });
